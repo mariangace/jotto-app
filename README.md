@@ -1,2 +1,1 @@
-# jotto-app
-# jotto-app
+# Testing with Enzyme and Jest Udemy course apps
