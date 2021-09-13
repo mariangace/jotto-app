@@ -1,4 +1,4 @@
-import { ShallowWrapper } from "enzyme"
+import { ShallowWrapper } from "enzyme";
 
 /**
  * Return node(s) with the fiven data-test attribute
@@ -7,5 +7,16 @@ import { ShallowWrapper } from "enzyme"
  * @returns {ShallowWrapper}
  */
 export const findByTestAttr = (wrapper, val) => {
-    return wrapper.find(`[data-test="${val}"]`)
-}
+  return wrapper.find(`[data-test="${val}"]`);
+};
+
+//With typescript we do not need to check for props
+// export const checkProps = (component, conformingProps) => {
+//   const propError = checkPropTypes(
+//     component.propTypes,
+//     conformingProps,
+//     "prop",
+//     compoent.name
+//   );
+//   expect(propError).toBeUndefined();
+// };
