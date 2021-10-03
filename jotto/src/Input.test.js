@@ -9,8 +9,8 @@ import Input from "./Input";
  * @para
  * @returns { ShallowWrapper }
  */
-const setup = (props = {}) => {
-  return shallow(<Input {...props} />);
+const setup = (secretWord = "party") => {
+  return shallow(<Input secretWord={secretWord} />);
 };
 
 test("renders without error", () => {
@@ -18,3 +18,13 @@ test("renders without error", () => {
   const component = findByTestAttr(wrapper, "component-input");
   expectExport(component.length).toBe(1);
 });
+
+test("input renders without error", () => {
+  const wrapper = setup();
+  const inputComponent = findByTestAttr(wrapper, "component-input");
+  expect(inputComponent.length).toBe(1);
+});
+
+// test("does not throw warning with expected props", () => {
+//   checkProps(Input, { secretWord: "party" });
+// });
