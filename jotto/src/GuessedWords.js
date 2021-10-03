@@ -5,7 +5,7 @@ const GuessedWords = (props) => {
   let contents;
   if (props.guessedWords.length === 0) {
     contents = (
-      <span data-test="guess-instructions">Try to guess the secre word!</span>
+      <span data-test="guess-instructions">Try to guess the secret word!</span>
     );
   } else {
     const guessedWordsRows = props.guessedWords.map((word, index) => (
@@ -17,8 +17,8 @@ const GuessedWords = (props) => {
     contents = (
       <div data-test="guessed-words">
         <h3>Guessed Words</h3>
-        <table>
-          <thead>
+        <table className="table table-sm">
+          <thead className="thead-light">
             <tr>
               <th>Guess</th>
               <th>Matching Letter</th>
@@ -36,7 +36,7 @@ GuessedWords.propTypes = {
   guessedWords: PropTypes.arrayOf(
     PropTypes.shape({
       guessedWord: PropTypes.string.isRequired,
-      letterMatchCount: 3,
+      letterMatchCount: PropTypes.number,
     }).isRequired
   ),
 };
