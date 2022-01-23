@@ -10,6 +10,12 @@ import Input from "./Input";
  * @para
  * @returns { ShallowWrapper }
  */
+//mock entire module for destructuring useState on import ////
+// jest.mock("react", () => ({
+//   ...jest.requireActual("react"),
+//   useState: (initialState) => [initialState, mockSetCurrentGuess],
+// }));
+
 const setup = (secretWord = "party") => {
   return shallow(<Input secretWord={secretWord} />);
 };
@@ -31,15 +37,33 @@ test("input renders without error", () => {
 // });
 
 describe("state controlled input field", () => {
-  test("state updates with value of input box upon change", () => {
-    const mockSetCurrentGuess = jest.fn();
+  let mockSetCurrentGuess = jest.fn();
+  let wrapper;
+  let originalUseState;
+
+  beforeEach(() => {
+    //to use better our resources we reused mockSetCurrentGuess and we cleared it.
+    mockSetCurrentGuess.mockClear();
+    originalUseState = React.useState;
     React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
+    wrapper = setup();
+  });
 
-    const wrapper = setup();
+  afterEach(() => {
+    React.useState = originalUseState;
+  });
+
+  test("state updates with value of input box upon change", () => {
     const inputBox = findByTestAttr(wrapper, "input-box");
-
     const mockEvent = { target: { value: "train" } };
+
     inputBox.simulate("change", mockEvent);
     expect(mockSetCurrentGuess).toHaveBeenCalledWith("train");
+  });
+  test("field is cleared upon submit button is click", () => {
+    const inputBox = findByTestAttr(wrapper, "submit-button");
+
+    inputBox.simulate("click", { preventDefault() {} });
+    expect(mockSetCurrentGuess).toHaveBeenCalledWith("");
   });
 });
